@@ -22,6 +22,7 @@ defmodule Til.Router do
   scope "/", Til do
     pipe_through [:browser, :browser_auth] # Use the default browser stack
     resources "/users", UsersController, only: [:new, :create, :edit]
+    resources "/posts", PostController
     get    "/login",  SessionController, :new
     post   "/login",  SessionController, :create
     delete "/logout", SessionController, :delete
