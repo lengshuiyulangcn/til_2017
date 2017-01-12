@@ -13,6 +13,11 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 
+import SimpleMDE from "simplemde"
+
+document.addEventListener("DOMContentLoaded", ()=> {
+  let simplemde = new SimpleMDE({ element: document.getElementById("markdownEditor") });
+});
 // Import local files
 //
 // Local files can be imported directly using relative

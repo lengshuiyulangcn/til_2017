@@ -22,7 +22,7 @@ defmodule Til.PostController do
     changeset = 
     conn.assigns.current_user
      |> build_assoc(:posts)
-     |> Post.changeset()
+     |> Post.changeset(post_params)
 
     case Repo.insert(changeset) do
       {:ok, _post} ->
@@ -74,4 +74,9 @@ defmodule Til.PostController do
   defp user_posts(user) do
     assoc(user, :posts)
   end
+  def unauthenticated(conn, _params) do  
+    conn
+      |> put_flash(:error, "Please first login")
+      |> redirect(to: "/login")
+  end 
 end
