@@ -5,6 +5,7 @@ defmodule Til.Post do
     field :title, :string
     field :content, :string
     belongs_to :user, Til.User
+    many_to_many :tags, Til.Tag, join_through: "posts_tags"
 
     timestamps()
   end

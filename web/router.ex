@@ -25,6 +25,7 @@ defmodule Til.Router do
     resources "/posts", PostController
     get    "/login",  SessionController, :new
     post   "/login",  SessionController, :create
+    resources "/tags", TagController, except: [:new, :edit] #ajax only
     delete "/logout", SessionController, :delete
 
     get "/", PageController, :index

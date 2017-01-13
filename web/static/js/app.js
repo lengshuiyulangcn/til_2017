@@ -15,6 +15,8 @@ import "phoenix_html"
 
 import SimpleMDE from "simplemde"
 
+import $ from "jquery"
+
 document.addEventListener("DOMContentLoaded", ()=> {
   let simplemde = new SimpleMDE({ element: document.getElementById("markdownEditor") });
 });
