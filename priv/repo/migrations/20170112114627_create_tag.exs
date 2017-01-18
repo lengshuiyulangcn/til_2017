@@ -7,6 +7,6 @@ defmodule Til.Repo.Migrations.CreateTag do
 
       timestamps()
     end
-
+    create unique_index(:tags,[:name])
   end
 end

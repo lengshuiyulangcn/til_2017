@@ -4,6 +4,7 @@ defmodule Til.PostController do
   plug Guardian.Plug.EnsureAuthenticated, [handler: __MODULE__] when action in [:new, :create, :edit, :update, :delete]
 
   alias Til.Post
+  alias Til.Tag
 
   def index(conn, _params) do
     posts = Repo.all(Post)
@@ -19,10 +20,13 @@ defmodule Til.PostController do
   end
 
   def create(conn, %{"post" => post_params}) do
+    tagStrings = String.split(post_params["tags"], ",")
+    tags = Tag |> where([t], t.name in ^tagStrings) |> Repo.all
     changeset = 
     conn.assigns.current_user
      |> build_assoc(:posts)
      |> Post.changeset(post_params)
+     |> Ecto.Changeset.put_assoc(:tags, tags)
 
     case Repo.insert(changeset) do
       {:ok, _post} ->
@@ -36,6 +40,8 @@ defmodule Til.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
+           |> Repo.preload(:user)
+           |> Repo.preload(:tags)
     render(conn, "show.html", post: post)
   end
 

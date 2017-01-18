@@ -18,6 +18,11 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :tags, class: "control-label" %>
+    <%= text_input f, :tags, class: "form-control", value: "", "data-role": "tagsinput"  %>
+  </div>
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

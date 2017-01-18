@@ -5,8 +5,7 @@ defmodule Til.Tag do
     field :name, :string
     many_to_many :posts, Til.Post, join_through: "posts_tags"
 
-    timestamps()
-  end
+    timestamps() end
 
   @doc """
   Builds a changeset based on the `struct` and `params`.
@@ -15,5 +14,8 @@ defmodule Til.Tag do
     struct
     |> cast(params, [:name])
     |> validate_required([:name])
+    |> unique_constraint(:name)
   end
+
+
 end

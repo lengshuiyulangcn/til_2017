@@ -10,18 +10,23 @@ defmodule Til.TagController do
   end
 
   def create(conn, %{"tag" => tag_params}) do
-    changeset = Tag.changeset(%Tag{}, tag_params)
-
-    case Repo.insert(changeset) do
-      {:ok, tag} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", tag_path(conn, :show, tag))
-        |> render("show.json", tag: tag)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Til.ChangesetView, "error.json", changeset: changeset)
+    name = tag_params["name"]
+    tag = Repo.get_by(Tag, name: name)
+    if(tag) do
+      conn |> render("show.json", tag: tag)
+    else
+      changeset = Tag.changeset(%Tag{}, tag_params)
+      case Repo.insert(changeset) do
+        {:ok, tag} ->
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", tag_path(conn, :show, tag))
+          |> render("show.json", tag: tag)
+        {:error, changeset} ->
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render(Til.ChangesetView, "error.json", changeset: changeset)
+      end
     end
   end
 

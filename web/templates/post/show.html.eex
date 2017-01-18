@@ -14,10 +14,17 @@
 
   <li>
     <strong>User:</strong>
-    <%= @post.user_id %>
+    <%= @post.user.email %>
   </li>
 
 </ul>
-
+<ul>
+  <strong>tags:</strong>
+  <%= for tag <- @post.tags do %>
+  <li>
+    <%= tag.name  %>
+  </li>
+  <% end %>
+</ul>
 <%= link "Edit", to: post_path(@conn, :edit, @post) %>
 <%= link "Back", to: post_path(@conn, :index) %>
